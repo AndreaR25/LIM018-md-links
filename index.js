@@ -2,6 +2,7 @@
 //   // ...
 // };
 //se importan los metodos desde fs y path 
+const { default: axios } = require('axios')
 const { link } = require('node:fs')
 const fs = require('node:fs')
 const path = require('node:path')
@@ -15,11 +16,11 @@ console.log(existRuta(routep))
 
 const absoluteRoute = (routep) => path.isAbsolute(routep)?routep:path.resolve(routep)
 
-console.log(absoluteRoute("prueba.md"))
+console.log("Es absoluta",absoluteRoute("prueba.md"))
 
 const viewExt = (routep) => path.extname(routep) === '.md'
 
-console.log(viewExt(routep))
+console.log('extension',viewExt(routep))
 
 const readFile = (routep) => fs.readFileSync(routep,'utf-8')
 
@@ -49,8 +50,36 @@ const getLinks = (routep) =>{
     return arr
 
    } else {
+     console.log("No se encontraron links")
      return []
    }
 
 }
 console.log("prueba",getLinks(routep))
+
+const validaLinkStatus =(arr)=>{
+const arrayofOb = getLinks(arr);
+return Promise.all(arrayofOb.map((link)=>{
+  return axios.get(link.href )
+  .then((response)=>{
+    link.status = response.status;
+    link.message =response.statusText
+ 
+    return link;
+  })
+  .catch((error)=>{
+    link.status= 502
+    link.message="Fail"
+
+    return link;
+  })
+}))
+}
+validaLinkStatus(routep).then((objeto)=> console.log(objeto))
+
+
+
+
+module.exports = {
+    existRuta, absoluteRoute, viewExt
+};
