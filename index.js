@@ -77,6 +77,58 @@ return Promise.all(arrayofOb.map((link)=>{
 }
 validaLinkStatus(routep).then((objeto)=> console.log(objeto))
 
+const totaLinks = (arrofLinks)=>{
+ const totaLinks = arrofLinks.length;
+  return totaLinks
+}
+
+console.log("total",totaLinks([1,2,3,4]))
+
+const uniqueLinks = (arrofLinks) =>{
+  const uniqueLinks = new Set (arrofLinks.map(link=>link.href)).size
+   return uniqueLinks
+ }
+
+ console.log("stats",uniqueLinks([
+  {
+    href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter',     
+    text: 'Array.prototype.filter() - MDN',
+    file: 'C:/Users/L-63/md-links/prueba/archivo.md',
+    status: 200,
+    message: 'OK'
+  },
+  {
+    href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter',     
+    text: 'Array.prototype.filter() - MDN',
+    file: 'C:/Users/L-63/md-links/prueba/archivo.md',
+    status: 200,
+    message: 'OK'
+
+  }
+]))
+
+const brokenLinks = (arrofLinks) =>{
+  const brokenLinks = arrofLinks.filter(link => link.message==='Fail')
+  console.log("prueba",brokenLinks)
+   return brokenLinks
+ }
+ console.log("broken",brokenLinks([
+  {
+    href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter',     
+    text: 'Array.prototype.filter() - MDN',
+    file: 'C:/Users/L-63/md-links/prueba/archivo.md',
+    status: 200,
+    message: 'OK'
+  },
+  {
+    href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter',     
+    text: 'Array.prototype.filter() - MDN',
+    file: 'C:/Users/L-63/md-links/prueba/archivo.md',
+    status: 200,
+    message: 'Fail'
+
+  }
+]),"fin")
 
 
 
